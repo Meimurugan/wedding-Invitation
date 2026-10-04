@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meimurugan Weds Bhumika |  Wedding Invitation</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Playfair Display & Great Vibes & Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        maroon: {
+                            50: '#fdf2f2',
+                            100: '#fde8e8',
+                            600: '#9b2c2c',
+                            700: '#771d1d',
+                            800: '#581c1c',
+                            900: '#451a03',
+                            950: '#2a0e0e'
+                        },
+                        gold: {
+                            100: '#fbf8ef',
+                            300: '#e6c56c',
+                            400: '#d4af37',
+                            500: '#c5a059',
+                            600: '#a3813c',
+                            700: '#82652b'
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['"Playfair Display"', 'serif'],
+                        script: ['"Great Vibes"', 'cursive'],
+                        sans: ['"Inter"', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        .gold-gradient-text {
+            background: linear-gradient(135deg, #bf953f 0%, #fc6 25%, #b38728 50%, #fbf5b7 75%, #aa771c 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .floating-petal {
+            position: absolute;
+            background-color: rgba(255, 182, 193, 0.5);
+            border-radius: 150% 0 150% 0;
+            animation: fall linear infinite;
+        }
+        @keyframes fall {
+            0% { transform: translateY(-10vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(105vh) rotate(360deg); opacity: 0.2; }
+        }
+        /* Hide scrollbars for slick mobile views */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #2a0e0e; }
+        ::-webkit-scrollbar-thumb { background: #c5a059; border-radius: 3px; }
+    </style>
+</head>
+<body class="bg-maroon-950 text-gold-100 font-sans antialiased overflow-x-hidden selection:bg-gold-500 selection:text-maroon-950">
+
+    <!-- STUNNING OPENING COVER SCREEN -->
+    <div id="welcome-screen" class="fixed inset-0 z-50 flex items-center justify-center bg-gradient-to-br from-maroon-950 via-maroon-900 to-maroon-950 px-4 transition-all duration-1000">
+        <div class="absolute inset-0 opacity-20 bg-[radial-gradient(#d4af37_1px,transparent_1px)] [background-size:24px_24px]"></div>
+        
+        <div class="relative z-10 max-w-md w-full bg-maroon-900/80 border-2 border-gold-400/60 p-8 rounded-3xl shadow-[0_0_50px_rgba(212,175,55,0.25)] text-center backdrop-blur-xl transform transition-transform duration-700">
+            <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-gold-500/15 border border-gold-400/40 flex items-center justify-center text-gold-400 shadow-inner">
+                <i class="fa-solid fa-ring text-2xl animate-bounce"></i>
+            </div>
+            
+            <span class="text-xs uppercase tracking-[0.3em] text-gold-300 font-medium"> Wedding Invitation</span>
+            <h2 class="font-script text-5xl sm:text-6xl gold-gradient-text my-3">Meimurugan <br><span class="text-3xl text-gold-200 font-serif">&</span><br> Bhumika</h2>
+            <p class="text-xs tracking-wider text-gold-300/80 mb-6">October 22, 2026 • Manamadurai</p>
+            
+            <button onclick="openInvitation()" class="w-full bg-gradient-to-r from-gold-600 via-gold-500 to-gold-600 hover:from-gold-500 hover:to-gold-400 text-maroon-950 font-bold py-4 px-8 rounded-2xl text-sm tracking-widest uppercase shadow-2xl transition-all transform hover:scale-[1.02] flex items-center justify-center gap-3">
+                <i class="fa-solid fa-envelope-open text-base"></i> Open Invitation
+            </button>
+            <p class="text-[10px] tracking-widest uppercase text-gold-400/60 mt-4">Tap to begin your experience</p>
+        </div>
+    </div>
+
+    <!-- Floating Petals Background Effect -->
+    <div id="petals-container" class="fixed inset-0 pointer-events-none z-40 overflow-hidden"></div>
+
+    <!-- Audio Background Controller -->
+    <div class="fixed bottom-6 right-6 z-40 bg-maroon-900/90 border border-gold-400/40 p-3 rounded-full shadow-2xl backdrop-blur-md flex items-center gap-3 cursor-pointer hover:border-gold-400 transition-all" id="audio-toggle" onclick="toggleAudio()">
+        <div class="w-8 h-8 rounded-full bg-gold-500/20 flex items-center justify-center text-gold-400 animate-pulse">
+            <i class="fa-solid fa-music text-sm" id="music-icon"></i>
+        </div>
+        <span class="text-xs font-serif tracking-wider pr-2 hidden sm:inline text-gold-300" id="music-text">Play Melody</span>
+    </div>
+    <audio id="bg-music" loop>
+        <source src="https://actions.google.com/sounds/v1/ambiences/gentle_wind.ogg" type="audio/ogg">
+    </audio>
+
+    <!-- Main Content Wrapper (Hidden until cover is opened) -->
+    <div id="main-content" class="opacity-0 transition-opacity duration-1000 pointer-events-none">
+
+        <!-- Hero Section -->
+        <header class="relative min-h-screen flex flex-col items-center justify-center text-center px-4 py-20 bg-gradient-to-b from-maroon-900 via-maroon-950 to-maroon-900">
+            <div class="absolute inset-0 opacity-15 bg-[radial-gradient(#d4af37_1px,transparent_1px)] [background-size:24px_24px]"></div>
+            
+            <div class="relative z-10 max-w-4xl mx-auto space-y-6">
+                <div class="flex items-center justify-center gap-4 text-gold-400">
+                    <span class="w-12 sm:w-24 h-[1px] bg-gradient-to-r from-transparent to-gold-400"></span>
+                    <i class="fa-solid fa-ring text-xl animate-bounce"></i>
+                    <span class="w-12 sm:w-24 h-[1px] bg-gradient-to-l from-transparent to-gold-400"></span>
+                </div>
+
+                <p class="text-xs sm:text-sm tracking-[0.3em] uppercase text-gold-300 font-medium">With the divine blessings of our families</p>
+                <p class="text-xs tracking-[0.2em] uppercase text-gold-400/80">We cordially invite you to celebrate our union</p>
+
+                <h1 class="font-script text-6xl sm:text-8xl md:text-9xl gold-gradient-text py-2 drop-shadow-lg">
+                    Meimurugan <span class="text-4xl sm:text-6xl text-gold-300 font-serif font-light">&</span> Bhumika
+                </h1>
+
+                <!-- Date Box -->
+                <div class="inline-block mt-6 p-6 bg-maroon-900/60 border border-gold-400/40 rounded-2xl backdrop-blur-sm shadow-2xl">
+                    <div class="grid grid-cols-3 gap-6 sm:gap-12 items-center text-center">
+                        <div>
+                            <span class="block text-xs uppercase tracking-widest text-gold-400">Day</span>
+                            <span class="font-serif text-lg sm:text-xl font-bold">Thursday</span>
+                        </div>
+                        <div class="border-x border-gold-400/20 px-2">
+                            <span class="block text-xs uppercase tracking-widest text-gold-400">Date</span>
+                            <span class="font-serif text-2xl sm:text-3xl font-bold gold-gradient-text">22 • 10 • 2026</span>
+                        </div>
+                        <div>
+                            <span class="block text-xs uppercase tracking-widest text-gold-400">Time</span>
+                            <span class="font-serif text-lg sm:text-xl font-bold">10:45 AM</span>
+                        </div>
+                    </div>
+                    <p class="mt-3 text-xs tracking-wider text-gold-300">Anandhavalli Amman Somanathar Temple, Manamadurai</p>
+                </div>
+
+                <!-- Scroll Down Indicator -->
+                <div class="pt-8">
+                    <a href="#countdown" class="inline-flex flex-col items-center text-gold-400 hover:text-gold-300 transition-colors">
+                        <span class="text-xs uppercase tracking-widest mb-2">Scroll to Explore</span>
+                        <i class="fa-solid fa-chevron-down animate-bounce text-sm"></i>
+                    </a>
+                </div>
+            </div>
+        </header>
+
+        <!-- Countdown Timer Section -->
+        <section id="countdown" class="py-16 px-4 bg-maroon-900/40 border-y border-gold-400/20 relative">
+            <div class="max-w-4xl mx-auto text-center">
+                <h2 class="font-serif text-3xl sm:text-4xl gold-gradient-text mb-2">Counting Down to Forever</h2>
+                <p class="text-xs sm:text-sm text-gold-300/80 tracking-wider mb-8">Until the sacred bells ring at Manamadurai</p>
+                
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-2xl mx-auto">
+                    <div class="bg-maroon-950/80 border border-gold-500/30 p-4 rounded-xl shadow-lg">
+                        <span id="days" class="font-serif text-3xl sm:text-5xl font-bold gold-gradient-text block">00</span>
+                        <span class="text-xs uppercase tracking-widest text-gold-300/70 mt-1 block">Days</span>
+                    </div>
+                    <div class="bg-maroon-950/80 border border-gold-500/30 p-4 rounded-xl shadow-lg">
+                        <span id="hours" class="font-serif text-3xl sm:text-5xl font-bold gold-gradient-text block">00</span>
+                        <span class="text-xs uppercase tracking-widest text-gold-300/70 mt-1 block">Hours</span>
+                    </div>
+                    <div class="bg-maroon-950/80 border border-gold-500/30 p-4 rounded-xl shadow-lg">
+                        <span id="minutes" class="font-serif text-3xl sm:text-5xl font-bold gold-gradient-text block">00</span>
+                        <span class="text-xs uppercase tracking-widest text-gold-300/70 mt-1 block">Minutes</span>
+                    </div>
+                    <div class="bg-maroon-950/80 border border-gold-500/30 p-4 rounded-xl shadow-lg">
+                        <span id="seconds" class="font-serif text-3xl sm:text-5xl font-bold gold-gradient-text block">00</span>
+                        <span class="text-xs uppercase tracking-widest text-gold-300/70 mt-1 block">Seconds</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Invitation Quote Section -->
+        <section class="py-20 px-4 text-center max-w-3xl mx-auto">
+            <div class="bg-gradient-to-b from-maroon-900/60 to-maroon-950/90 border border-gold-400/30 p-8 sm:p-12 rounded-3xl shadow-2xl relative">
+                <div class="absolute -top-5 left-1/2 transform -translate-x-1/2 bg-maroon-950 px-6 py-1 border border-gold-400/40 rounded-full text-gold-400 text-sm tracking-widest uppercase font-serif">
+                    🙏 Cordial Invitation
+                </div>
+                
+                <i class="fa-solid fa-quote-left text-3xl text-gold-400/40 mb-4 block"></i>
+                <p class="font-serif text-lg sm:text-2xl leading-relaxed text-gold-100 italic mb-6">
+                    "Dear All, We cordially invite you and your family to grace the wedding ceremony and bless the newlyweds as they begin their beautiful journey together."
+                </p>
+            </div>
+        </section>
+
+        <!-- Events Schedule & Venues -->
+        <section id="events" class="py-16 px-4 bg-maroon-900/30">
+            <div class="max-w-5xl mx-auto">
+                <div class="text-center mb-12">
+                    <span class="text-xs uppercase tracking-[0.3em] text-gold-400">Celebration Schedule</span>
+                    <h2 class="font-serif text-3xl sm:text-4xl gold-gradient-text mt-1">Wedding Ceremonies</h2>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    
+                    <!-- Event 1: Nichayathartham & Reception -->
+                    <div class="bg-maroon-950/90 border border-gold-500/30 rounded-2xl p-6 sm:p-8 shadow-xl flex flex-col justify-between hover:border-gold-400 transition-all">
+                        <div>
+                            <div class="flex items-center justify-between mb-4">
+                                <span class="bg-gold-500/10 border border-gold-500/30 text-gold-300 text-xs px-3 py-1 rounded-full uppercase tracking-wider">Pre-Wedding</span>
+                                <span class="text-xs text-gold-400"><i class="fa-regular fa-calendar-days mr-1"></i> 21-10-2026, Wednesday</span>
+                            </div>
+                            <h3 class="font-serif text-2xl font-bold text-gold-200 mb-2">Nichayathartham & Reception</h3>
+                            <div class="space-y-2 text-sm text-gold-100/90 my-4">
+                                <p class="flex items-center gap-2">
+                                    <i class="fa-regular fa-clock text-gold-400 w-5"></i> 
+                                    <span>6:30 PM to 7:30 PM</span>
+                                </p>
+                                <p class="flex items-start gap-2">
+                                    <i class="fa-solid fa-location-dot text-gold-400 w-5 mt-1"></i> 
+                                    <span><strong>K.K. Alaya Thirumana Mahal</strong><br>Pillaiyar Salai, Manamadurai</span>
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <div class="pt-6 border-t border-gold-400/20 flex flex-wrap gap-3 items-center justify-between">
+                            <a href="https://maps.google.com/?q=K.K.+Alaya+Thirumana+Mahal+Pillaiyar+Salai+Manamadurai" target="_blank" class="flex-1 bg-maroon-900 hover:bg-maroon-800 border border-gold-400/50 text-gold-300 py-2.5 px-4 rounded-xl text-xs sm:text-sm font-medium text-center transition-all flex items-center justify-center gap-2">
+                                <i class="fa-solid fa-map-location-dot text-gold-400"></i> Open Maps
+                            </a>
+                            <button onclick="addToCalendar('Nichayathartham & Reception', 'K.K. Alaya Thirumana Mahal, Pillaiyar Salai, Manamadurai', '20261021T183000', '20261021T193000')" class="bg-gold-500 hover:bg-gold-400 text-maroon-950 font-semibold py-2.5 px-4 rounded-xl text-xs sm:text-sm transition-all flex items-center justify-center gap-2 shadow-md">
+                                <i class="fa-solid fa-calendar-plus"></i> Save Date
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Event 2: Wedding Ceremony -->
+                    <div class="bg-maroon-950/90 border border-gold-500/30 rounded-2xl p-6 sm:p-8 shadow-xl flex flex-col justify-between hover:border-gold-400 transition-all relative overflow-hidden">
+                        <div class="absolute top-0 right-0 bg-gold-500 text-maroon-950 text-[10px] uppercase font-bold px-3 py-1 rounded-bl-xl tracking-widest">Main Event</div>
+                        <div>
+                            <div class="flex items-center justify-between mb-4">
+                                <span class="bg-gold-500/10 border border-gold-500/30 text-gold-300 text-xs px-3 py-1 rounded-full uppercase tracking-wider">Muhurtham</span>
+                                <span class="text-xs text-gold-400"><i class="fa-regular fa-calendar-days mr-1"></i> 22-10-2026, Thursday</span>
+                            </div>
+                            <h3 class="font-serif text-2xl font-bold text-gold-200 mb-2">Wedding Ceremony</h3>
+                            <div class="space-y-2 text-sm text-gold-100/90 my-4">
+                                <p class="flex items-center gap-2">
+                                    <i class="fa-regular fa-clock text-gold-400 w-5"></i> 
+                                    <span>10:45 AM to 11:45 AM</span>
+                                </p>
+                                <p class="flex items-start gap-2">
+                                    <i class="fa-solid fa-location-dot text-gold-400 w-5 mt-1"></i> 
+                                    <span><strong>Anandhavalli Amman Somanathar Temple</strong><br>Manamadurai</span>
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <div class="pt-6 border-t border-gold-400/20 flex flex-wrap gap-3 items-center justify-between">
+                            <a href="https://maps.google.com/?q=Anandhavalli+Amman+Somanathar+Temple+Manamadurai" target="_blank" class="flex-1 bg-maroon-900 hover:bg-maroon-800 border border-gold-400/50 text-gold-300 py-2.5 px-4 rounded-xl text-xs sm:text-sm font-medium text-center transition-all flex items-center justify-center gap-2">
+                                <i class="fa-solid fa-map-location-dot text-gold-400"></i> Open Maps
+                            </a>
+                            <button onclick="addToCalendar('Wedding Ceremony - Meimurugan Weds Bhoomika', 'Anandhavalli Amman Somanathar Temple, Manamadurai', '20261022T104500', '20261022T114500')" class="bg-gold-500 hover:bg-gold-400 text-maroon-950 font-semibold py-2.5 px-4 rounded-xl text-xs sm:text-sm transition-all flex items-center justify-center gap-2 shadow-md">
+                                <i class="fa-solid fa-calendar-plus"></i> Save Date
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Family Details Section -->
+        <section class="py-16 px-4 max-w-4xl mx-auto">
+            <div class="text-center mb-12">
+                <span class="text-xs uppercase tracking-[0.3em] text-gold-400">Warm Regards</span>
+                <h2 class="font-serif text-3xl sm:text-4xl gold-gradient-text mt-1">Family & Relatives</h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Groom's Family -->
+                <div class="bg-maroon-900/40 border border-gold-400/20 p-6 sm:p-8 rounded-2xl text-center shadow-lg">
+                    <div class="w-12 h-12 rounded-full bg-gold-500/10 border border-gold-400/30 flex items-center justify-center mx-auto mb-4 text-gold-400">
+                        <i class="fa-solid fa-house-chimney text-lg"></i>
+                    </div>
+                    <h3 class="font-serif text-xl font-bold text-gold-200 mb-4">Groom's Family</h3>
+                    <div class="space-y-3 text-sm text-gold-100/90">
+                        <p><strong class="text-gold-300">Mr. Krishna</strong></p>
+                        <p><strong class="text-gold-300">Mrs. Mari Ammal</strong></p>
+                        <p><strong class="text-gold-300">K. Naga</strong> <span class="text-xs text-gold-400/80">(B.Tech. Civil)</span></p>
+                        <p class="pt-2 border-t border-gold-400/10"><strong class="text-gold-300">K. Siva</strong> <span class="text-xs text-gold-400/80">(B.Tech. Marine)</span></p>
+                    </div>
+                </div>
+                <!-- Bride's Family -->
+                <div class="bg-maroon-900/40 border border-gold-400/20 p-6 sm:p-8 rounded-2xl text-center shadow-lg">
+                    <div class="w-12 h-12 rounded-full bg-gold-500/10 border border-gold-400/30 flex items-center justify-center mx-auto mb-4 text-gold-400">
+                        <i class="fa-solid fa-people-roof text-lg"></i>
+                    </div>
+                    <h3 class="font-serif text-xl font-bold text-gold-200 mb-4">Bride's Family</h3>
+                    <div class="space-y-3 text-sm text-gold-100/90">
+                        <p><strong class="text-gold-300">Mr. Manjunatha BN</strong> <span class="text-xs text-gold-400/80">(Business)</span></p>
+                        <p><strong class="text-gold-300">Mrs. Varalakshmi</strong> <span class="text-xs text-gold-400/80">(Teacher)</span></p>
+                        <p class="pt-2 border-t border-gold-400/10"><strong class="text-gold-300">B.M. Venkat</strong> <span class="text-xs text-gold-400/80">(Software Engineer)</span></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- WhatsApp Wishes Section -->
+        <section class="py-16 px-4 bg-maroon-900/50 border-t border-gold-400/20">
+            <div class="max-w-2xl mx-auto">
+                <div class="text-center mb-10">
+                    <span class="text-xs uppercase tracking-[0.3em] text-gold-400">Send Your Blessings</span>
+                    <h2 class="font-serif text-3xl sm:text-4xl gold-gradient-text mt-1">Wishes via WhatsApp</h2>
+                    <p class="text-xs sm:text-sm text-gold-300/80 mt-2">Send your heartfelt wishes directly to our WhatsApp</p>
+                </div>
+
+                <div class="bg-maroon-950 border border-gold-500/30 p-6 sm:p-8 rounded-2xl shadow-2xl">
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-xs uppercase tracking-wider text-gold-300 mb-1 font-medium">Your Name</label>
+                            <input type="text" id="guest-name" required placeholder="Enter your full name" class="w-full bg-maroon-900/80 border border-gold-500/30 rounded-xl px-4 py-3 text-sm text-gold-100 focus:outline-none focus:border-gold-400 transition-colors">
+                        </div>
+                        <div>
+                            <label class="block text-xs uppercase tracking-wider text-gold-300 mb-1 font-medium">Your Blessings / Message</label>
+                            <textarea id="guest-message" required rows="3" placeholder="Wishing you a lifetime of love and joy..." class="w-full bg-maroon-900/80 border border-gold-500/30 rounded-xl px-4 py-3 text-sm text-gold-100 focus:outline-none focus:border-gold-400 transition-colors"></textarea>
+                        </div>
+                        <button type="button" onclick="sendToWhatsApp()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-3 px-6 rounded-xl text-sm transition-all shadow-lg uppercase tracking-wider flex items-center justify-center gap-2">
+                            <i class="fa-brands fa-whatsapp text-lg"></i> Send Blessing on WhatsApp
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer Section -->
+        <footer class="py-12 px-4 text-center border-t border-gold-400/20 bg-maroon-950 text-gold-300">
+            <div class="max-w-2xl mx-auto space-y-4">
+                <h2 class="font-script text-4xl sm:text-5xl gold-gradient-text">Meimurugan ❤️ Bhumika</h2>
+                <p class="text-xs tracking-[0.2em] uppercase text-gold-400">22 • 10 • 2026 • Manamadurai</p>
+                <p class="text-[11px] text-gold-400/60 pt-4">Designed with love for family and friends.</p>
+            </div>
+        </footer>
+
+    </div>
+
+    <script>
+        // --- Open Invitation Action ---
+        function openInvitation() {
+            const welcomeScreen = document.getElementById('welcome-screen');
+            const mainContent = document.getElementById('main-content');
+            
+            welcomeScreen.style.opacity = '0';
+            setTimeout(() => {
+                welcomeScreen.style.display = 'none';
+                mainContent.classList.remove('opacity-0', 'pointer-events-none');
+                toggleAudio(); // Automatically trigger background ambience upon opening
+            }, 700);
+        }
+
+        // --- Floating Petals Generator ---
+        function createPetals() {
+            const container = document.getElementById('petals-container');
+            const count = 15;
+            for (let i = 0; i < count; i++) {
+                const petal = document.createElement('div');
+                petal.classList.add('floating-petal');
+                const size = Math.random() * 10 + 8;
+                petal.style.width = `${size}px`;
+                petal.style.height = `${size * 1.5}px`;
+                petal.style.left = `${Math.random() * 100}vw`;
+                petal.style.top = `-20px`;
+                petal.style.animationDuration = `${Math.random() * 6 + 4}s`;
+                petal.style.animationDelay = `${Math.random() * 5}s`;
+                container.appendChild(petal);
+            }
+        }
+        createPetals();
+
+        // --- Countdown Timer ---
+        const weddingDate = new Date('October 22, 2026 10:45:00').getTime();
+
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const distance = weddingDate - now;
+
+            if (distance < 0) {
+                document.getElementById('countdown').innerHTML = '<h2 class="font-serif text-3xl gold-gradient-text">The Wedding Day is Here! 🎉</h2>';
+                return;
+            }
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById('days').innerText = String(days).padStart(2, '0');
+            document.getElementById('hours').innerText = String(hours).padStart(2, '0');
+            document.getElementById('minutes').innerText = String(minutes).padStart(2, '0');
+            document.getElementById('seconds').innerText = String(seconds).padStart(2, '0');
+        }
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+
+        // --- Background Audio Toggle ---
+        let isPlaying = false;
+        const audio = document.getElementById('bg-music');
+        const musicIcon = document.getElementById('music-icon');
+        const musicText = document.getElementById('music-text');
+
+        function toggleAudio() {
+            if (isPlaying) {
+                audio.pause();
+                musicIcon.className = "fa-solid fa-music text-sm";
+                musicText.innerText = "Play Melody";
+                isPlaying = false;
+            } else {
+                audio.play().catch(e => console.log('Audio playback prevented by browser policy'));
+                musicIcon.className = "fa-solid fa-volume-high text-sm";
+                musicText.innerText = "Pause Melody";
+                isPlaying = true;
+            }
+        }
+
+        // --- Add to Calendar Function ---
+        function addToCalendar(title, location, startISO, endISO) {
+            const googleCalendarUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(title)}&dates=${startISO}/${endISO}&details=${encodeURIComponent('Wedding celebration of K. Meimurugan & B.M. Bhoomika')}&location=${encodeURIComponent(location)}`;
+            window.open(googleCalendarUrl, '_blank');
+        }
+
+        // --- WhatsApp Direct Wishes Submission ---
+        function sendToWhatsApp() {
+            const phoneNumber = "916380660266";
+            const nameInput = document.getElementById('guest-name').value.trim();
+            const messageInput = document.getElementById('guest-message').value.trim();
+
+            if (!nameInput || !messageInput) {
+                alert("Please enter both your name and your blessing message before sending.");
+                return;
+            }
+
+            const text = `💍 Wedding Blessing from *${nameInput}*:\n\n"${messageInput}"\n\n(For Meimurugan & Bhumika's Wedding)`;
+            const encodedText = encodeURIComponent(text);
+            
+            window.open(`https://wa.me/${phoneNumber}?text=${encodedText}`, '_blank');
+        }
+    </script>
+</body>
+</html>
